@@ -7,21 +7,22 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytorch-spiking-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pytorch-spiking-{{ version }}.tar.gz
   sha256: 233ec5eab820762e638d1d37e540814047fb31557431a7393f9916d1bbe36230
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.6
+    - python {{ python_min }}
+    - setuptools
   run:
     - numpy >=1.16.0
-    - python >=3.6
+    - python >={{ python_min }}
     - pytorch >=1.0.0
 
 test:
@@ -31,6 +32,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://www.nengo.ai/pytorch-spiking
